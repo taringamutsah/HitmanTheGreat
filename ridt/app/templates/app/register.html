@@ -1,0 +1,20 @@
+{% extends "website/base.html" %}
+
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-lg-6">
+      <form method="post">
+        <fieldset class="">
+          <legend class="border-bottom mb-4"><h2>Register</h2></legend>
+          {% csrf_token %}
+          {{ form | crispy }}
+          <button class="btn btn-secondary mt-2" type="submit" value="Register">Register</button>
+        </fieldset>
+
+      </form>
+    </div>
+  </div>
+{% endblock %}

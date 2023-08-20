@@ -1,0 +1,49 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-lg-8">
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="#">{{ object.created_by }}</a>
+            <small class="text-muted">{{ object.create_timestamp }}</small>
+
+          </div>
+          <h2 class="article-title">{{ object.title }}</h2>
+          <p class="article-content">{{ object.content }}</p>
+          {% if object.created_by == user %}
+            <a class="btn btn-secondary" href="{% url 'post-update' object.id %}">Update</a>
+            <a class="btn btn-danger  " href="{% url 'post-delete' object.id %}">Delete</a>
+          {% endif %}
+        </div>
+      </article>
+    </div>
+    <div class="col-lg-4">
+      <h4>Comments ({{ post_comment_count }})</h4>
+      <div class="row">
+        <div class="col-lg-12 mb-3">
+          <form action="{% url 'post-detail' object.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+
+              {{ form }}
+            </div>
+            <button type="submit" class="btn btn-secondary btn-block mt-2">Comment</button>
+          </form>
+        </div>
+        {% for comment in post_comment %}
+        <div class="col-lg-12 mt-2">
+          <h5 style="color:#07bf;">{{ comment.created_by }}</h5>
+          <small>{{ comment.create_timestamp }}</small>
+          <p>{{ comment.content }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+
+
+{% endblock %}
